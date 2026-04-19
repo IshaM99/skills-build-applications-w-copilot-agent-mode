@@ -27,7 +27,10 @@ DEBUG = True
 
 
 import os
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# Allow all hosts for development and Codespaces
+ALLOWED_HOSTS = ['*']
+
 if os.environ.get('CODESPACE_NAME'):
     ALLOWED_HOSTS.append(f"{os.environ.get('CODESPACE_NAME')}-8000.app.github.dev")
 
@@ -88,6 +91,7 @@ DATABASES = {
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
             'host': 'mongodb://localhost:27017',
+            # No authentication or password required for local dev
         },
     }
 }
@@ -133,6 +137,10 @@ STATIC_URL = 'static/'
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = ['*']
+CORS_ALLOW_METHODS = ['DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']
+CORS_EXPOSE_HEADERS = ['*']
 
 # Custom user model
 AUTH_USER_MODEL = 'octofit_tracker.User'
